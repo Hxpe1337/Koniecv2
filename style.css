@@ -1,0 +1,579 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    min-height: 150vh; /* 150% wysokości widocznej części okna przeglądarki */
+
+    font-family: 'Roboto', sans-serif;
+    background-color: #121212; /* Dark background */
+    color: #E0E0E0; /* Lighter text color for contrast */
+}
+
+:root {
+    --border-color: #333;
+    --secondary-color: #242424; 
+}
+
+/* Stylizowanie tła paska przewijania */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+/* Stylizowanie przesuwaka paska przewijania */
+::-webkit-scrollbar-thumb {
+    background-color: #888; 
+    border-radius: 6px;
+}
+
+/* Stylizowanie tła paska przewijania przy najechaniu */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555; 
+}
+/* Stylizowanie przesuwaka paska przewijania */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #888 var(--border-color);
+}
+
+
+
+.container-flex {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px; /* Możesz dostosować maksymalną szerokość */
+    margin: 20px auto; /* Aby wyśrodkować kontener na stronie */
+}
+
+.container {
+    width: 100%; /* Procent szerokości kontenera dla symulatora giełdy */
+    padding: 20px;
+    height: 300px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+    transition: box-shadow 0.3s ease;
+    background-color: #242424;
+    overflow: hidden;
+}
+
+.right {
+    border: 1px solid var(--border-color);
+
+    width: 65%; /* Procent szerokości kontenera dla historii transakcji */
+    background-color: #242424;
+    border-radius: 5px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+    padding: 10px 20px;
+    margin-left: 20px;
+}
+/* Styl dla komunikatów o transakcjach */
+.transaction {
+    margin-top: 12px;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+/* Styl dla komunikatów o kupnie */
+.transaction.bought {
+    border: 1px solid rgb(104, 245, 104);
+    color: white; /* Biały kolor tekstu dla kupionych akcji */
+}
+
+.transaction.bought i {
+    color: rgb(104, 245, 104);
+    margin-right: 15px;
+}
+
+/* Styl dla komunikatów o sprzedaży */
+.transaction.sold {
+    border: 2px solid rgb(231, 61, 61);
+    color: rgb(241, 241, 241); /* Biały kolor tekstu dla sprzedanych akcji */
+}
+/* Styl dla komunikatów o sprzedaży */
+.transaction.sold i {
+    color: rgb(231, 61, 61); /* Biały kolor tekstu dla sprzedanych akcji */
+}
+.left {
+    border: 1px solid var(--border-color);
+
+    flex: 1; /* Elastyczność, aby lewy panel zajmował dostępną przestrzeń */
+    background-color: var(--secondary-color);/* Darker background for the container */
+    border-radius: 15px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.2); /* Dodanie subtelnych cieni */
+    padding: 10px 10px;
+    margin-right: 10px; /* Dodatkowy odstęp między panelami */
+    width: 25;
+}
+.chartContainer {
+    width: 100%; /* Szerokość kontenera na wykres ma zajmować całą dostępną przestrzeń */
+    height: 400px; /* Wysokość kontenera na wykres */
+    margin-top: 20px; /* Dodatkowy odstęp od góry */
+}
+h1, h2, p {
+    margin: 10px 0;
+}
+
+#notifications {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: column-reverse; /* Elementy ustawione kolumnie w odwrotnej kolejności */
+}
+
+.container:hover {
+    box-shadow: 0 5px 25px rgba(0,0,0,0.4); /* Zwiększony cień przy najechaniu */
+}
+h1, h2, p {
+    margin: 10px 0;
+}
+
+#transactions {
+    margin-top: 20px;
+}
+.container-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Dodatkowy odstęp od góry */
+}
+
+button {
+    background-color: var(--border-color); /* Ciemniejsze tło dla przycisków */
+    color: #FFF; /* Biały kolor tekstu */
+    border: none; /* Brak obramowania */
+    padding: 10px 20px; /* Wypełnienie dla estetyki */
+    border-radius: 5px; /* Zaokrąglone rogi dla przycisków */
+    cursor: pointer; /* Kursor wskazujący na możliwość kliknięcia */
+    transition: background-color 0.2s ease; /* Płynne przejście koloru tła */
+    margin: 10px; /* Dodatkowy odstęp między przyciskami */
+}
+
+
+#transactions {
+    margin-top: 20px;
+    max-height: 300px; /* Maksymalna wysokość kontenera historii transakcji */
+    overflow-y: auto; /* Dodanie paska przewijania, jeśli zawartość przekracza maksymalną wysokość */
+}
+
+/* Styl dla ikonek */
+.transaction i {
+    margin-right: 10px; /* Odległość między ikoną a tekstem */
+}
+
+/* Styl dla kontenera transakcji */
+.transaction {
+    display: flex; /* Ustawienie na flexbox */
+    align-items: center; /* Wyśrodkowanie zawartości w pionie */
+}
+
+/* Styl dla ikony kupna */
+.transaction.bought i {
+font-size: 24px;}
+
+/* Styl dla ikony sprzedaży */
+.transaction.sold i {
+    font-size: 24px;}
+
+/* Ustawienie, aby tekst był na końcu */
+.transaction p {
+    margin-left: auto; /* Ustawienie marginesu na auto po lewej stronie */
+}
+
+button:hover {
+    border: 2px solid #2c2c2c;
+    background-color: #444; /* Slightly lighter background on hover */
+}
+.buyButton, .sellButton {
+    display: inline-flex; /* Włącz wyświetlanie flex dla przycisków */
+    align-items: center; /* Wyśrodkuj ikony względem tekstu */
+    justify-content: center; /* Wyśrodkuj treść przycisków */
+}
+input[type="number"] {
+    margin-top: 10px;
+    background-color: var(--border-color); /* Dark background for inputs */
+    color: #FFF; /* White text for inputs */
+    border: 1px solid #444; /* Slightly lighter border for contrast */
+    padding: 10px;
+    border-radius: 5px; /* Rounded corners for the input fields */
+}
+
+input[type="number"]::placeholder {
+    color: #BBB; /* Lighter color for placeholders */
+}
+.chart {
+    width: 600px;
+    height: 300px;
+}
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 2;
+}
+#notifications {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: column-reverse; /* Elementy ustawione kolumnie w odwrotnej kolejności */
+}
+
+.notification {
+    background-color: rgb(67, 201, 67);
+    color: white;
+    padding: 10px;
+    margin-bottom: 10px; /* Dodaj margines między powiadomieniami */
+    border-radius: 5px;
+    height: 55px;
+    animation: slideIn 0.5s ease forwards;
+    display: flex;
+    align-items: center;
+}
+.error {
+    background-color: rgb(255, 51, 51); /* Kolor czerwony dla powiadomień o błędach */
+}
+
+.error .fas {
+    color: white; /* Kolor ikony błędu na biały */
+}
+
+.sell {
+    background-color: rgb(255, 165, 0); /* Pomarańczowe tło dla powiadomień o sprzedaży */
+    color: white; /* Biały kolor tekstu dla powiadomień o sprzedaży */
+}
+
+.buy {
+    background-color: rgb(0, 128, 0); /* Zielone tło dla powiadomień o kupnie */
+    color: white; /* Biały kolor tekstu dla powiadomień o kupnie */
+}
+
+
+.notification i {
+    opacity: 0.8;
+    margin-right: 10px; /* Dodaj odstęp między ikoną a tekstem */
+    font-size: 50px; /* Zmniejsz rozmiar ikony */
+}
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.buy-button {
+    border: solid 2px #34d339;
+    background-color: transparent;
+    width: 200px;
+    padding: 10px;
+    margin-right: 10px; /* Margines z prawej strony, aby oddzielić od przycisku sprzedaży */
+    transition: background-color 0.3s ease-in-out; /* Gładkie przejście koloru tła */
+}
+
+.sell-button {
+    border: solid 2px #e73b2e;
+    background-color: transparent;
+    width: 200px;
+    padding: 10px;
+    transition: background-color 0.3s ease-in-out; /* Gładkie przejście koloru tła */
+}
+
+.sell-button:hover {
+    border: solid 2px #e73b2e;
+}
+.buy-button:hover { 
+    border: solid 2px #34d339;
+
+}
+
+.buy-button i, .sell-button i {
+    margin-right: 5px; /* Odstęp między ikoną a tekstem */
+}
+
+/* Resetowanie stylów dla wszystkich elementów */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.balance-container small {
+    font-size: 0.75em; /* Mniejszy rozmiar tekstu */
+    font-weight: normal; /* Usunięcie pogrubienia */
+}
+
+.navbar {
+    z-index: 1000;
+    position: fixed; /* Stała pozycja na ekranie */
+    top: 0; /* Przyklejony do górnej krawędzi */
+    left: 0; /* Przyklejony do lewej krawędzi */
+    width: 250px; /* Szerokość paska bocznego */
+    height: 100%; /* Wysokość całego ekranu */
+    background-color: var(--secondary-color);/* Ciemne tło dla paska bocznego */
+    color: white;
+    padding: 15px;
+    border-right: 1px solid var(--border-color); /* Granica po prawej stronie */
+    box-shadow: 2px 0 15px rgba(0,0,0,0.2); /* Cień po prawej stronie */
+    display: flex;
+    flex-direction: column; /* Elementy pionowo */
+  }
+/* Styl dla kontenera nawigacji */
+.log {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+/* Styl dla listy nawigacyjnej */
+.nav-links {
+    list-style-type: none;
+}
+.log {
+    display: flex;
+    align-items: center;
+}
+
+/* Styl dla kontenera salda */
+.balance-container {
+    display: flex;
+    align-items: center;
+    margin-right: 20px; /* Odstęp między saldem a logiem */
+    border-radius: 15px;
+    padding: 10px;
+    font-family: monospace;
+    transition: box-shadow 0.3s ease; /* Płynne przejście dla cienia */
+}
+.value {
+    color: #fff;
+    padding: 10px 10px;
+    border: 1px solid var(--border-color); /* Darker border color */
+    border-radius: 15px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.2); /* Dodanie subtelnych cieni */
+    transition: box-shadow 0.3s ease; /* Płynne przejście dla cienia */
+    background-color: var(--secondary-color);/* Darker background for the container */
+}
+/* Styl dla ikonki */
+.balance-icon {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+/* Styl dla salda */
+#balance {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Styl dla logo */
+.logo {
+    margin-left: 20px; /* Odstęp między logiem a linkami nawigacyjnymi */
+}
+
+
+/* Styl dla salda */
+#balance {
+    font-size: 20px;
+    font-weight: bold;
+}
+/* Styl dla elementów listy nawigacyjnej */
+.nav-links li {
+    display: inline;
+    margin-right: 20px;
+}
+.value i {
+    margin-right: 5px;
+}
+/* Styl dla linków w nawigacji */
+.nav-links li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+
+
+
+.button-group {
+    display: flex;
+}
+
+
+
+input[type="number"] {
+    flex-grow: 1; /* Pole tekstowe zajmuje dostępną przestrzeń */
+    margin-right: 10px; /* Margines dla separacji od grupy przycisków */
+}
+
+/* Zmniejszamy padding i font w przyciskach, aby pasowały do input */
+button {
+    padding: 5px 8px;
+    font-size: 0.9rem;
+}
+
+.input-group label {
+    display: block; /* Etykieta zajmie całą szerokość, umieszczając się nad inputem */
+    margin-top: -50px; /* Mały odstęp od etykiety do inputu */
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px; /* Większy odstęp między grupami inputów */
+}
+
+.button-group button {
+    padding: 5px 10px; /* Dostosowanie rozmiaru przycisków */
+    margin-left: 5px; /* Odstępy między przyciskami */
+}
+
+input[type="number"], .button-group button {
+    height: 40px; /* Ujednolicenie wysokości inputów i przycisków */
+    vertical-align: middle; /* Wyrównanie przycisków do środka względem inputów */
+}
+
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Alokacja przestrzeni między elementami */
+    border-radius: 5px;
+    background-color: var(--secondary-color);/* Darker background for the container */
+    border: 1px solid var(--border-color); /* Darker border color */
+    box-shadow: 0 2px 15px rgba(0,0,0,0.2); /* Subtelne cienie */
+
+}
+
+.input-container input {
+    flex: 1; /* Input zajmuje dostępną przestrzeń, ale pozostawia miejsce dla przycisków */
+    border: none;
+    background-color: transparent;
+    color: white;
+    font-size: 24px;
+    padding: 10px 15px 10px 15px; /* Dodaj padding z lewej i prawej */
+    font-family: monospace;
+
+}
+
+.input-container label {
+    position: absolute;
+    top: 0; /* Ustawienie etykiety na samej górze kontenera */
+    left: 20px; /* Odstęp od lewej krawędzi kontenera */
+    background-color: var(--secondary-color);/* Tło takie jak kontener */
+    padding: 0 5px; /* Niewielki padding dla etykiety */
+    color: white;
+    font-size: 12px;
+    transform: none; /* Brak transformacji, etykieta zawsze na górze */
+    transition: none; /* Brak animacji */
+}
+
+.input-container input:focus + label,
+.input-container input:not(:placeholder-shown) + label {
+    font-size: 12px; /* Brak zmiany rozmiaru fontu */
+
+}
+
+.button-group {
+    display: flex; /* Przyciski w linii obok siebie */
+}
+
+.button-group button {
+    padding: 5px 10px;
+    margin-left: 5px; /* Odstęp między przyciskami */
+    border: 1px solid var(--border-color); /* Darker border color */
+    border-radius: 5px;
+    background-color: #242424;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button-group button:first-child {
+    margin-left: 0; /* Usunięcie odstępu dla pierwszego przycisku */
+}
+
+.input-container input::placeholder {
+    color: transparent; /* Ukrycie placeholdera */
+}
+
+/* Ukrycie label, gdy input jest pusty */
+/* Usunięcie styli ukrywających etykietę, gdy input jest pusty */
+.input-container input:not(:focus):placeholder-shown + label {
+    visibility: visible; /* Etykieta jest zawsze widoczna */
+}
+
+.chart-controls {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.chart-controls button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    background-color: var(--border-color);
+    color: #FFF;
+    border: none;
+    cursor: pointer;
+}
+
+.chart-controls button:hover {
+    background-color: #555;
+}
+
+.faq-container {
+    margin: 20px auto;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: var(--secondary-color);/* Darker background for the container */
+    border: 1px solid var(--border-color); /* Darker border color */
+    color: #E0E0E0; /* Jasny tekst dla kontrastu */
+    max-width: 1200px; /* Opcjonalnie, możesz dostosować szerokość */
+}
+
+.faq {
+    border-bottom: 1px solid #444;
+    margin-bottom: 5px;
+    overflow: hidden; /* Ważne dla animacji */
+}
+
+.faq:last-child {
+    border-bottom: none;
+}
+
+.faq-question {
+    background-color: var(--secondary-color);/* Darker background for the container */
+
+    font-weight: bold;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: var(--border-color); /* Nieco jaśniejszy niż kontener */
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Płynne przejście dla tła */
+}
+.faq-question::before {
+    content: "\f059"; /* Kod Unicode dla ikony pytajnika z Font Awesome */
+    font-family: "Font Awesome 5 Free"; /* Upewnij się, że nazwa jest zgodna z Twoją wersją Font Awesome */
+    display: inline-block;
+    margin-right: 10px;
+    font-weight: 900; /* Font Awesome wymaga grubości czcionki 900 dla solidnych ikon */
+}
+
+.faq-question:hover {
+    background-color: #444; /* Jaśniejszy kolor przy najechaniu */
+}
+
+.faq-answer {
+    background-color: var(--secondary-color);/* Darker background for the container */
+
+    max-height: 0;
+    padding: 0 10px;
+    border-radius: 4px;
+    transition: max-height 0.5s ease-out, padding 0.5s ease-out; /* Animacja dla rozwijania */
+}
+
+.faq.active .faq-answer {
+    padding: 10px;
+    max-height: 200px; /* Wystarczająco duże, by pomieścić każdą odpowiedź */
+}

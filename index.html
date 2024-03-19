@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symulator Giełdy</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+    <div style="width: 200px; margin-left: 25px; margin-top: 25px;" class="balance-container">
+        <div class="balance-icon">
+            <i class="fas fa-wallet"></i>
+        </div>
+        <p><span id="balance">1000000</span></p>
+    </div>
+    <div class="container-flex">
+
+    <div class="left">
+        <div id="stockInfo">
+            <h2 style="text-align: center; margin-bottom: 20px;"> Akcja: ABC Corp</h2>
+            <p class="value"><i class="fas fa-chart-pie"></i> Akcje w posiadaniu: <span id="sharesOwned">0</span></p>
+            <p class="value"><i class="fas fa-money-bill-alt"></i> Aktualna wartość akcji: <span id="currentPrice">0</span> PLN</p>
+            <p class="value"><i class="fas fa-chart-line"></i> Zmiana ceny: <span id="changePercentage">0</span></p>
+            <p class="value"><i class="fas fa-dollar-sign"></i> Całkowita wartość akcji: <span id="totalValue">0</span></p>
+            <div class="container-buttons">
+
+          
+            </div>
+            <div class="input-container">
+                <input type="number" id="sharesToBuy" placeholder=" " required>
+                <label for="sharesToBuy" class="input-label">Kupno akcji</label>
+                <div class="button-group">
+                    <button type="button" id="buyOne" class="input-btn" data-amount="1">1</button>
+                    <button type="button" id="buyHalf" class="input-btn" data-amount="half">Half</button>
+                    <button type="button" id="buyAll" class="input-btn" data-amount="all">All</button>
+                </div>
+            </div>
+            
+            <div style="margin-top: 20px; margin-bottom: 20px;" class="input-container">
+                <input type="number" id="sharesToSell" placeholder=" " required>
+                <label for="sharesToSell" class="input-label">Sprzedaż akcji</label>
+                <div class="button-group">
+                    <button type="button" id="sellOne" class="input-btn" data-amount="1">1</button>
+                    <button type="button" id="sellHalf" class="input-btn" data-amount="half">Half</button>
+                    <button type="button" id="sellAll" class="input-btn" data-amount="all">All</button>
+                </div>
+            </div>
+            <div class="container-buttons">
+            <button id="buyButton" class="buy-button"><i class="fas fa-shopping-cart"></i> Kup akcję</button>
+            <button id="sellButton" class="sell-button"><i class="fas fa-money-bill-wave"></i> Sprzedaj akcję</button>
+        </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="chart-controls">
+            <button id="zoomIn">Zoom In</button>
+            <button id="zoomOut">Zoom Out</button>
+        </div>
+        <div class="chartContainer">
+            <canvas id="stockChart"></canvas>
+        </div>
+        
+
+
+    </div>
+    <div class="right">
+        <h2 style="text-align: center; margin-bottom: 20px;">Historia Transakcji</h2>
+
+        <div id="transactions" class="transaction-container"></div>
+
+            
+        </div>
+    </div>
+    <div class="faq-container">
+        <h2>FAQ - Często zadawane pytania</h2>
+        <div class="faq">
+            <div class="faq-question">Jak rozpocząć inwestowanie?</div>
+            <div class="faq-answer">Aby rozpocząć inwestowanie, wybierz akcję z listy, określ ilość i użyj przycisku Kup/Sprzedaj.</div>
+        </div>
+        <div class="faq">
+            <div class="faq-question">Czy mogę sprzedać akcje w dowolnym momencie?</div>
+            <div class="faq-answer">Tak, możesz sprzedać akcje w dowolnym momencie, o ile posiadasz odpowiednią ilość w swoim portfelu.</div>
+        </div>
+        <div class="faq">
+            <div class="faq-question">Jak śledzić zmiany wartości akcji?</div>
+            <div class="faq-answer">Wartość akcji i jej zmiany są prezentowane na wykresie oraz w sekcji informacji o akcji.</div>
+        </div>
+        <!-- Dodaj więcej pytań i odpowiedzi tutaj -->
+    </div>
+    
+    </div>
+
+    
+    <div id="notifications"></div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
